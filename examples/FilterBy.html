@@ -16,7 +16,7 @@
 			<strong>You can filter values by several columns</strong>
 			<div class="textbox" v-for="item in columns">
 			  <label>
-				<input type="text" v-bind:value="item.field" v-model="filterFields[item.field]">
+				<input type="text" v-bind:value="item.field" v-model="filterFields[item.field]">				
 				{{item.label}}
 			  </label>
 			</div>		 
@@ -30,7 +30,7 @@ new Vue({
 	el:'#app'	,
 	data: function () {
         return {   	
-			filterFields:{},
+			filterFields:{},			
             columns: [                       
                         {label: 'Name',field: 'name'},
 						{label: 'Type',field: 'type'},
@@ -50,7 +50,8 @@ new Vue({
 			var _self=this;
 			var filterSettings=[];
 			Object.keys(this.filterFields).forEach(function(prop){
-				filterSettings.push({key:prop, value: _self.filterFields[prop]});
+				if(_self.filterFields[prop])
+					filterSettings.push({key:prop, value: _self.filterFields[prop]});
 			});
 			return arrayExt.FilterBy(this.rows,filterSettings);
 		}	

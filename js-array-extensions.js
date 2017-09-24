@@ -40,11 +40,23 @@ arrayExt.FilterBy = function (arr, filters) {
     if(!arr) return result;
     result = arr.filter(function(item) {
         var isSuitable = true;		 
-        filters.forEach(function(f) {			
-            if(item[f.key] !== f.value) {
-                isSuitable = false;
-                return;
-            }
+        filters.forEach(function(f) {
+			switch(f.operator)
+			{
+				case 'like':
+					if(item[f.key].indexOf(f.value)>-1) {
+						isSuitable = false;
+						return;
+					}
+				break;
+				case 'equal':
+				default:					 
+					if(item[f.key] !== f.value) {
+						isSuitable = false;
+						return;
+					}
+			}
+           
         });
         return isSuitable;
     });
