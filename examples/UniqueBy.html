@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
+    <script src="http://rawgit.com/d-kochanzhi/cmp-table/master/src/cmp-table.js"></script>
+    <script src="../js-array-extensions.js"></script>
+</head>
+
+<body>
+    <div class=container>
+        <div id="app" class="col-md-6 col-md-offset-2">
+            <cmp-table title="Original array" v-bind:columns="columns" v-bind:rows="rows"> </cmp-table>
+			<br />
+			<strong>You can get unique values by several columns</strong>
+			<div class="checkbox" v-for="item in columns">
+			  <label>
+				<input type="checkbox" v-bind:value="item.field" v-model="uniqueFields">
+				{{item.label}}
+			  </label>
+			</div>		 
+			<br />
+			<cmp-table title="UniqueBy" v-bind:columns="columns" v-bind:rows="uniqueData"> </cmp-table>
+        </div>
+    </div>
+<script>
+
+new Vue({
+	el:'#app'	,
+	data: function () {
+        return {   	
+			uniqueFields:[],
+            columns: [                       
+                        {label: 'Name',field: 'name'},
+						{label: 'Type',field: 'type'},
+						{label: 'Price',field: 'price'}
+            ],			
+            rows: [
+                  { id: 1, 	name: "John Snow",		type:"Actor",		price:2.5},
+				  { id: 2, 	name: "John Due",		type:"Stranger",	price:10},
+                  { id: 3, 	name: "Martin D.",		type:"Writer",		price:7},
+				  { id: 4, 	name: "Leonardo D.",	type:"Actor",		price:2.5},
+                  { id: 5, 	name: "Guest",			type:"Stranger",	price:10 },
+            ]
+        }
+    },
+	computed: {
+	
+		uniqueData: function(){
+			return arrayExt.UniqueBy(this.rows,this.uniqueFields);
+		}
+	
+	}
+});
+</script>
+
+	</body>	
+</html>
