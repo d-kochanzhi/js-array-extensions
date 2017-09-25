@@ -18,8 +18,9 @@
 			  <label>
 				<input type="checkbox" v-bind:value="item.field" v-model="uniqueFields">
 				{{item.label}}
-			  </label>
-			</div>		 
+			  </label>			 
+			</div>
+				{{uniqueFields}}			
 			<br />
 			<cmp-table title="UniqueBy" v-bind:columns="columns" v-bind:rows="uniqueData"> </cmp-table>
         </div>
