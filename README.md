@@ -1,4 +1,4 @@
-# javascsript Array extension
+# javascript Array extension
 
 ## functions
 
