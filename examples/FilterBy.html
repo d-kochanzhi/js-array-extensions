@@ -10,17 +10,17 @@
 
 <body>
     <div class=container>
-        <div id="app" class="col-md-6 col-md-offset-2">
+        <div id="app" class="col-md-8 col-md-offset-2">
             <cmp-table title="Original array" v-bind:columns="columns" v-bind:rows="rows"> </cmp-table>
 			<br />
-			<strong>You can filter values by several columns</strong>
+			<strong>You can filter values by several columns. You can use multi values for filter: Actor,Writer</strong>
 			<div class="textbox" v-for="item in columns">
 			  <label>
 			    <input type="checkbox" v-model="inversFields[item.field]" >Not</input>
 				<input type="checkbox" v-model="likeFields[item.field]" >Like</input>
 				<input type="text" v-bind:value="item.field" v-model="filterFields[item.field]">				
 				{{item.label}}
-			  </label>
+			  </label>			  
 			</div>	
 			{{filterSettings}};
 			<br />
