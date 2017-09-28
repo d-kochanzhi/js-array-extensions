@@ -32,35 +32,47 @@ arrayExt.UniqueBy = function (arr, fields) {
 /**
  * @method FilterBy - Отфильтровать массив по набору фильтров
  * @param arr - Массив из объектов
- * @param filters - Параметры для фильтрации массива (название поля, его значение)[{key:'', value:'', operator:'not [equal/like]'}]
+ * @param filters - Параметры для фильтрации массива (название поля, его значение)[{key:'', value:'[array/any type]', operator:'not [equal/like]'}]
  */
 arrayExt.FilterBy = function (arr, filters) {
     var result = [];
     if (!arr || !filters || filters.length == 0) return arr;
     result = arr.filter(function (item) {
-        var isSuitable = true;
+        var itemSuitable = true;
         filters.forEach(function (f) {
-            var invers = false;
+			var filterValues = [];
+            var filterInvers = false;
             var filterSuitable = false;
             var op = f.operator
             if (f.operator && f.operator.indexOf('not') > -1) {
-                invers = true;
+                filterInvers = true;
                 op = f.operator.substring(4);
-            }
-            /*if(isSuitable) return true; TODO: make filters AND/OR */
+            }		
+			if (Array.isArray(f.value))			
+				filterValues = f.value;
+			else
+				filterValues.push(f.value);
+			
+            /*TODO: make filters AND/OR */
             switch (op) {
                 /*[like] always string*/
-                case 'like':
-                    if (String(item[f.key]).indexOf(f.value) > -1) filterSuitable = true;
+                case 'like':					 
+						filterSuitable = filterValues.some(function(element, index, array){
+							return String(item[f.key]).indexOf(element) > -1;
+						});
+                    
                     break;
                 case 'equal':
                 default:
-                    if (item[f.key] == f.value) filterSuitable = true;
+						filterSuitable = filterValues.some(function(element, index, array){
+							return item[f.key] == element;
+						});
+                    
             }
-            if (invers) filterSuitable = !filterSuitable;
-            isSuitable = isSuitable & filterSuitable;
+            if (filterInvers) filterSuitable = !filterSuitable;
+            itemSuitable = itemSuitable & filterSuitable;
         });
-        return isSuitable;
+        return itemSuitable;
     });
     return result ? result : [];
 };

@@ -59,7 +59,7 @@ new Vue({
 				if(_self.filterFields[prop]){
 					var invers = _self.inversFields[prop];
 					var operator = _self.likeFields[prop];
-					_self.filterSettings.push({key:prop, value: _self.filterFields[prop], operator: (invers ? 'not ':'') + (operator? 'like' : 'equal')});
+					_self.filterSettings.push({key:prop, value: _self.filterFields[prop].split(','), operator: (invers ? 'not ':'') + (operator? 'like' : 'equal')});
 				}
 					
 			});
