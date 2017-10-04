@@ -53,10 +53,9 @@ arrayExt.FilterBy = function (arr, filters) {
 			else
 				filterValues.push(f.value);
 			
-            /*TODO: make filters AND/OR */
-            switch (op) {
-                /*[like] always string*/
+            switch (op) {               
                 case 'like':					 
+						/*[like] always string*/
 						filterSuitable = filterValues.some(function(element, index, array){
 							return String(item[f.key]).indexOf(element) > -1;
 						});
@@ -80,6 +79,7 @@ arrayExt.FilterBy = function (arr, filters) {
  * @method SortBy - Отсортировать массив по полям
  * @param arr - Массив из объектов
  * @param fields - поля по которым нужно отфильтровать ['a','b','-c']
+ * @extends https://jsperf.com/multi-column-sort
  */
 arrayExt.SortBy = function (arr, fields) {
     if (!arr || !fields || fields.length == 0) return arr;
